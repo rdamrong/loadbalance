@@ -1,23 +1,23 @@
 Example Playbook
 ----------------
 
-- name: Blue Deployment
+\- name: Blue Deployment
   hosts: all
   
   roles:
-    - {role: loadbalance, WORKSHOP_ID: '131', scenario: 'blue' }
+    \- {role: loadbalance, WORKSHOP_ID: '131', scenario: 'blue' }
 
 ###################
 
-- name: Green Deployment
+\- name: Green Deployment
   hosts: all
   
   roles:
-    - {role: loadbalance, WORKSHOP_ID: '131', scenario: 'green' }
+    \- {role: loadbalance, WORKSHOP_ID: '131', scenario: 'green' }
 
 ###################
-- name: Blue-Green Server
+\- name: Blue-Green Server
   hosts: all
   
   roles:
-    - {role: loadbalance, WORKSHOP_ID: '131', scenario: 'blue-green' }
+    \- {role: loadbalance, WORKSHOP_ID: '131', scenario: 'blue-green' }
