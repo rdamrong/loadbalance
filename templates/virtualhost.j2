@@ -1,0 +1,12 @@
+<VirtualHost *:8088>
+  ServerName lab{{ WORKSHOP_ID }}.example.com
+  DocumentRoot /var/www/html/
+</VirtualHost>
+<VirtualHost *:8088>
+  ServerName blue{{ WORKSHOP_ID }}.example.com
+  DocumentRoot /var/www/html/blue
+</VirtualHost>
+<VirtualHost *:8088>
+  ServerName green{{ WORKSHOP_ID }}.example.com
+  DocumentRoot /var/www/html/green
+</VirtualHost>

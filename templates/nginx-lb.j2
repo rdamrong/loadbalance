@@ -1,0 +1,31 @@
+upstream backend {
+   server green{{ WORKSHOP_ID }}.example.com:8081; 
+   server blue{{ WORKSHOP_ID }}.example.com:8082; 
+}
+
+
+server {
+   listen 80; 
+   server_name lab{{ WORKSHOP_ID }}.example.com;
+
+   location / {
+      proxy_pass http://backend;
+      proxy_set_header Host $http_host;
+   }
+}
+server {
+   listen 8081; 
+   server_name green{{ WORKSHOP_ID }}.example.com;
+
+   location / {
+      proxy_pass http://green{{ WORKSHOP_ID }}.example.com:8088;
+   }
+}
+server {
+   listen 8082; 
+   server_name blue{{ WORKSHOP_ID }}.example.com;
+
+   location / {
+      proxy_pass http://blue{{ WORKSHOP_ID }}.example.com:8088;
+   }
+}

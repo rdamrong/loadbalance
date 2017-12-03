@@ -1,0 +1,54 @@
+---
+# tasks file for loadbalance
+  - name: Add Repository
+    yum_repository: 
+      name: "{{ item }}"
+      description: "Workshop Repo - {{ item }}  "
+      file: "{{ item }}"
+      baseurl: "http://master.example.com/{{ item }}"
+      gpgcheck: no
+    with_items: "{{ REPO }}"
+  - name: Install Software
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items: "{{ SOFTWARE }}"
+  - name: Start and Enable Service
+    service:
+      name: "nginx"
+      enabled: yes
+      state: started
+  - name: Enabled Firewall Policy for HTTP
+    firewalld:
+      service: "http"
+      permanent: true
+      state: enabled
+      immediate: yes
+  - name: Setting Loadbalance 
+    template:
+      src: nginx-lb.j2
+      dest: /etc/nginx/conf.d/lb.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - "Restart nginx"
+  - name: Blue Project Only
+    lineinfile:
+      path: "/etc/nginx/conf.d/lb.conf"
+      regexp: "server green{{ WORKSHOP_ID }}.example.com"
+      state: absent
+    notify:
+      - "Restart nginx"
+    when: (scenario == 'blue')
+  - name: Green Project Only
+    lineinfile:
+      path: "/etc/nginx/conf.d/lb.conf"
+      regexp: "server blue{{ WORKSHOP_ID }}.example.com"
+      state: absent
+    notify:
+      - "Restart nginx"
+    when: (scenario == 'green')
+
+
+

@@ -1,0 +1,7 @@
+---
+# vars file for loadbalance
+REPO: ["centos","updates","addon"] 
+SOFTWARE: ["nginx"]
+httpd_port: 8088
+WORKSHOP_ID: 0
+
